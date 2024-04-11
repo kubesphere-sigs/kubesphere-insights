@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 [ -f "$GITHUB_ENV" ] && source $GITHUB_ENV
 
 FROM_DATE=$(date -d'14 day ago' +%Y-%m-%d)

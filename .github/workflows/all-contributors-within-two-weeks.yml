@@ -20,6 +20,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      repository-projects: read
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,23 +35,12 @@ jobs:
       run: echo "::set-output name=date::$(date +%Y%m%d-%H%M%S)"
     
     - name: set env
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
         echo "DATE=${{ steps.date.outputs.date }}" >> $GITHUB_ENV
         
-    #- name: Start SSH via Ngrok
-    #  run: curl -sL https://gist.githubusercontent.com/retyui/7115bb6acf151351a143ec8f96a7c561/raw/7099b9db76729dc5761da72aa8525f632d8875c9/debug-github-actions.sh | bash
-    #  env:
-       # After sign up on the https://ngrok.com/
-       # You can find this token here: https://dashboard.ngrok.com/get-started/setup
-    #   NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-
-       # This password you will use when authorizing via SSH 
-    #   USER_PASS: ${{ secrets.USER_PASS }}
-        
     - name: Contributors
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: bash ks_all_contributors_within_two_weeks.sh
       
     - name: Upload Artifact

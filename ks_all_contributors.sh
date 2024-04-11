@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 [ -f "$GITHUB_ENV" ] && source $GITHUB_ENV
 
 for i in $(cat ks_repo.txt);
