@@ -4,6 +4,9 @@ set -ex
 
 [ -f "$GITHUB_ENV" ] && source $GITHUB_ENV
 
+# Check if the token is valid
+curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/user" | grep 200
+
 for i in $(cat ks_repo.txt);
 do
   for j in {1..30};
